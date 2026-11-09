@@ -30,6 +30,9 @@ def handle_events():
         elif paused:
             if event.type == SDL_KEYUP:
                 paused_keyups.append(event)
+        elif (inventory_open and event.type == SDL_KEYDOWN and
+              event.key == SDLK_2):
+            boy.large_ball_selected = True
         else:
             boy.handle_event(event)
 
