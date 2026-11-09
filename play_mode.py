@@ -34,13 +34,16 @@ def handle_events():
               event.key == SDLK_2):
             boy.ball_enabled = True
             boy.large_ball_selected = True
+            inventory_open = False
         elif (inventory_open and event.type == SDL_KEYDOWN and
               event.key == SDLK_1):
             boy.ball_enabled = True
             boy.large_ball_selected = False
+            inventory_open = False
         elif (inventory_open and event.type == SDL_KEYDOWN and
               event.key == SDLK_0):
             boy.ball_enabled = False
+            inventory_open = False
         else:
             boy.handle_event(event)
 
