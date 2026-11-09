@@ -18,6 +18,7 @@ class Boy:
         self.dir = 0
         self.face_dir = 1
         self.pressed_keys = set()
+        self.ball_enabled = True
         self.large_ball_selected = False
 
         self.machine = Machine(
@@ -48,6 +49,8 @@ class Boy:
         self.frame = 0
 
     def fire_ball(self):
+        if not self.ball_enabled:
+            return
         ball = Ball(self.x, self.y, self.face_dir * 10,
                     large=self.large_ball_selected)
         game_world.add_oject(ball)
