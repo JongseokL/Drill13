@@ -1,0 +1,63 @@
+import game_framework
+from pico2d import *
+import game_world
+from boy import Boy
+from grass import Grass
+
+paused = False
+paused_keyups = []
+
+
+def handle_events():
+    global paused, paused_keyups
+
+    event_list = get_events()
+    for event in event_list:
+        if event.type == SDL_QUIT:
+            game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_p:
+            paused = not paused
+            if not paused:
+                for keyup in paused_keyups:
+                    boy.handle_event(keyup)
+                paused_keyups.clear()
+        elif paused:
+            if event.type == SDL_KEYUP:
+                paused_keyups.append(event)
+        else:
+            boy.handle_event(event)
+
+
+def init():
+    global boy, paused, paused_keyups
+
+    paused = False
+    paused_keyups = []
+    game_world.clear()
+    boy = Boy()
+    game_world.add_oject(boy)
+
+    grass = Grass()
+    game_world.add_oject(grass, 0)
+
+
+def update():
+    if not paused:
+        game_world.update()
+
+
+def render():
+    clear_canvas()
+    game_world.render()
+    if paused:
+        draw_rectangle(740, 540, 780, 580, 30, 30, 30, 220, True)
+        draw_rectangle(750, 550, 757, 570, 255, 255, 255, 255, True)
+        draw_rectangle(763, 550, 770, 570, 255, 255, 255, 255, True)
+    update_canvas()
+
+def finish():
+    global boy
+    game_world.clear()
+    boy = None
