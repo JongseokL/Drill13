@@ -33,6 +33,9 @@ def handle_events():
         elif (inventory_open and event.type == SDL_KEYDOWN and
               event.key == SDLK_2):
             boy.large_ball_selected = True
+        elif (inventory_open and event.type == SDL_KEYDOWN and
+              event.key == SDLK_1):
+            boy.large_ball_selected = False
         else:
             boy.handle_event(event)
 
